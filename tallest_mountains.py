@@ -1,3 +1,4 @@
+from email.policy import default
 from pickle import LONG1
 import requests
 import math
@@ -14,8 +15,10 @@ ANDES_URL = 'https://en.wikipedia.org/wiki/List_of_mountains_in_the_Andes'
 NORTH_AMERICA_URL = 'https://en.wikipedia.org/wiki/List_of_the_highest_major_summits_of_North_America'
 EUROPE_URL = 'https://en.wikipedia.org/wiki/List_of_prominent_mountains_of_the_Alps_above_3000_m'
 
-# Asia data parsing
+# select number of mountains to display per region
+NUM_PER_REGION = st.sidebar.slider(label="Select the Number of Mountains to Display per Region", min_value=1, max_value=20, value=10)
 
+# Asia data parsing
 response = requests.get(ASIA_URL)
 
 # find table in webpage
@@ -24,7 +27,7 @@ asia_html = soup.find_all('table')[2]
 
 # convert to pandas df
 asia_list = pd.read_html(str(asia_html))
-asia_df = pd.DataFrame(asia_list[0])
+asia_df = pd.DataFrame(asia_list[0]).head(NUM_PER_REGION)
 
 asia_data = asia_df.values.tolist()
 asia_data[0][1] = "Mount Everest"
@@ -37,7 +40,7 @@ soup = BeautifulSoup(response.text, 'html.parser')
 africa_html = soup.find_all('table')[1]
 
 africa_list = pd.read_html(str(africa_html))
-africa_df = pd.DataFrame(africa_list[0])
+africa_df = pd.DataFrame(africa_list[0]).head(NUM_PER_REGION)
 africa_data = africa_df.values.tolist()
 
 
@@ -48,7 +51,7 @@ soup = BeautifulSoup(response.text, 'html.parser')
 andes_html = soup.find_all('table')[1]
 
 andes_list = pd.read_html(str(andes_html))
-andes_df = pd.DataFrame(andes_list[0]).drop(['Image'], axis=1).dropna().head(100)
+andes_df = pd.DataFrame(andes_list[0]).drop(['Image'], axis=1).dropna().head(NUM_PER_REGION)
 andes_data = andes_df.values.tolist()
 
 
@@ -59,7 +62,7 @@ soup = BeautifulSoup(response.text, 'html.parser')
 na_html = soup.find_all('table')[0]
 
 na_list = pd.read_html(str(na_html))
-na_df = pd.DataFrame(na_list[0]).head(100)
+na_df = pd.DataFrame(na_list[0]).head(NUM_PER_REGION)
 na_data = na_df.values.tolist()
 
 
@@ -70,10 +73,8 @@ soup = BeautifulSoup(response.text, 'html.parser')
 europe_html = soup.find_all('table')[5]
 
 europe_list = pd.read_html(str(europe_html))
-europe_df = pd.DataFrame(europe_list[0]).head(100)
+europe_df = pd.DataFrame(europe_list[0]).head(NUM_PER_REGION)
 europe_data = europe_df.values.tolist()
-
-st.write(europe_data)
 
 
 def create_rows(data, africa=False, andes=False, north_america=False, europe=False):
