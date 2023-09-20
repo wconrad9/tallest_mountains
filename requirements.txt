@@ -1,6 +1,6 @@
 requests==*
 streamlit==*
-pandas==*
-bs4==*
+pandas==1.4.4
+beautifulsoup4==4.11.1
 streamlit-globe==*
-lxml==*
+lxml==4.9.1
