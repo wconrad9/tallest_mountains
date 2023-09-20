@@ -106,7 +106,7 @@ def create_rows(data, africa=False, andes=False, north_america=False, europe=Fal
     longs = [float(row[COORD_COL].split('/')[1].split(' ')[2][:-2]) for row in data]
 
     if north_america:
-        heights = [(float(row[HEIGHT_COL][:-3].replace(',',"")) / 3.281) for row in data]
+        heights = [(float(row[HEIGHT_COL][:-3].replace(',',"").replace(u'\xa0', u'')) / 3.281) for row in data]
     else:
         heights = [float(row[HEIGHT_COL]) for row in data]    
 
