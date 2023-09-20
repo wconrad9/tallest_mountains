@@ -1,7 +1,4 @@
-from email.policy import default
-from pickle import LONG1
 import requests
-import math
 
 import streamlit as st
 import pandas as pd
@@ -37,7 +34,7 @@ asia_data[0][1] = "Mount Everest"
 response = requests.get(AFRICA_URL)
 
 soup = BeautifulSoup(response.text, 'html.parser')
-africa_html = soup.find_all('table')[1]
+africa_html = soup.find_all('table')[2]
 
 africa_list = pd.read_html(str(africa_html))
 africa_df = pd.DataFrame(africa_list[0]).head(NUM_PER_REGION)
