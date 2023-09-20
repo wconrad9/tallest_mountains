@@ -1,0 +1,5 @@
+requests
+streamlit
+pandas
+bs4
+streamlit_globe
