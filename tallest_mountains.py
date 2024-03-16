@@ -21,7 +21,7 @@ response = requests.get(ASIA_URL)
 
 # find table in webpage
 soup = BeautifulSoup(response.text,'html.parser')
-asia_html = soup.find_all('table')[2]
+asia_html = soup.find_all('table')[1]
 
 # convert to pandas df
 asia_list = pd.read_html(StringIO(str(asia_html)))
@@ -35,7 +35,7 @@ asia_data[0][1] = "Mount Everest"
 response = requests.get(AFRICA_URL)
 
 soup = BeautifulSoup(response.text, 'html.parser')
-africa_html = soup.find_all('table')[2]
+africa_html = soup.find_all('table')[1]
 
 africa_list = pd.read_html(StringIO(str(africa_html)))
 africa_df = pd.DataFrame(africa_list[0]).head(NUM_PER_REGION)
@@ -46,7 +46,7 @@ africa_data = africa_df.values.tolist()
 response = requests.get(ANDES_URL)
 
 soup = BeautifulSoup(response.text, 'html.parser')
-andes_html = soup.find_all('table')[1]
+andes_html = soup.find_all('table')[0]
 
 andes_list = pd.read_html(StringIO(str(andes_html)))
 andes_df = pd.DataFrame(andes_list[0]).drop(['Image'], axis=1).dropna().head(NUM_PER_REGION)
@@ -68,7 +68,7 @@ na_data = na_df.values.tolist()
 
 response = requests.get(EUROPE_URL)
 soup = BeautifulSoup(response.text, 'html.parser')
-europe_html = soup.find_all('table')[5]
+europe_html = soup.find_all('table')[2]
 
 europe_list = pd.read_html(StringIO(str(europe_html)))
 europe_df = pd.DataFrame(europe_list[0]).head(NUM_PER_REGION)
